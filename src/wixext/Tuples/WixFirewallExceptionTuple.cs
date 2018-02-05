@@ -16,6 +16,7 @@ namespace WixToolset.Firewall.Tuples
         Profile,
         Component_,
         Description,
+        Direction,
     }
 
     public class WixFirewallExceptionTuple : IntermediateTuple
@@ -88,6 +89,12 @@ namespace WixToolset.Firewall.Tuples
         {
             get => this.Fields[(int)WixFirewallExceptionTupleFields.Description].AsString();
             set => this.Set((int)WixFirewallExceptionTupleFields.Description, value);
+        }
+
+        public int Direction
+        {
+            get => this.Fields[(int)WixFirewallExceptionTupleFields.Direction].AsNumber();
+            set => this.Set((int)WixFirewallExceptionTupleFields.Direction, value);
         }
     }
 }

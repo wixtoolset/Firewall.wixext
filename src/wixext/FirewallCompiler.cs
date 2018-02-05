@@ -82,6 +82,8 @@ namespace WixToolset.Firewall
             string scope = null;
             string remoteAddresses = null;
             string description = null;
+            string directionValue = null;
+            int? direction = null;
 
             foreach (XAttribute attrib in element.Attributes())
             {
@@ -177,6 +179,21 @@ namespace WixToolset.Firewall
                             break;
                         case "Description":
                             description = this.ParseHelper.GetAttributeValue(sourceLineNumbers, attrib);
+                            break;
+                        case "Direction":
+                            directionValue = this.ParseHelper.GetAttributeValue(sourceLineNumbers, attrib);
+                            switch (directionValue)
+                            {
+                                case "in":
+                                    direction = FirewallConstants.NET_FW_RULE_DIR_IN;
+                                    break;
+                                case "out":
+                                    direction = FirewallConstants.NET_FW_RULE_DIR_OUT;
+                                    break;
+                                default:
+                                    this.Messaging.Write(ErrorMessages.IllegalAttributeValue(sourceLineNumbers, element.Name.LocalName, "Direction", directionValue, "in", "out"));
+                                    break;
+                            }
                             break;
                         default:
                             this.ParseHelper.UnexpectedAttribute(element, attrib);
@@ -296,6 +313,9 @@ namespace WixToolset.Firewall
                 row.Set(8, componentId);
 
                 row.Set(9, description);
+
+                // Default is "in"
+                row.Set(10, direction ?? FirewallConstants.NET_FW_RULE_DIR_IN);
 
                 if (this.Context.Platform == Platform.ARM)
                 {

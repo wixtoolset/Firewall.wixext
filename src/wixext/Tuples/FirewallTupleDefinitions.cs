@@ -25,6 +25,7 @@ namespace WixToolset.Firewall.Tuples
                 new IntermediateFieldDefinition(nameof(WixFirewallExceptionTupleFields.Profile), IntermediateFieldType.Number),
                 new IntermediateFieldDefinition(nameof(WixFirewallExceptionTupleFields.Component_), IntermediateFieldType.String),
                 new IntermediateFieldDefinition(nameof(WixFirewallExceptionTupleFields.Description), IntermediateFieldType.String),
+                new IntermediateFieldDefinition(nameof(WixFirewallExceptionTupleFields.Direction), IntermediateFieldType.Number),
             },
             typeof(WixFirewallExceptionTuple));
     }
